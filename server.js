@@ -8,8 +8,9 @@ var PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/db'));
 
-var notes = [];
+var notes = require("./db/db.json");
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"));
@@ -21,10 +22,10 @@ app.get("/", function(req, res) {
     return res.json(notes);
   });
 
-  app.post("/api/tables", function(req, res) {
+  app.post("/api/notes", function(req, res) {
     var note = req.body;
     console.log(note);
-    characters.push(note);
+    notes.push(note);
     res.json(note);
   });
 
